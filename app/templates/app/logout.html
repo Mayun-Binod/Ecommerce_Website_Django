@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Logged Out{% endblock title %}
+{% block main-content %}
+<div class="container text-center my-5">
+  <h1 class="text-success">You have successfully logged out!</h1>
+  <p class="mt-3">Thank you for visiting KinMelBazaar. We hope to see you again soon.</p>
+  <div class="mt-4">
+    <a href="{% url 'login' %}" class="btn btn-primary me-2">Login Again</a>
+    <a href="/" class="btn btn-secondary">Back to Home</a>
+  </div>
+</div>
+{% endblock main-content %}

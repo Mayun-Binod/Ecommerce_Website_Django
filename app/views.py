@@ -4,7 +4,7 @@ from app.models import *
 from django.views import View
 from .models import User
 from .forms import CustomerRegistrationForm
-
+from django.contrib import messages
 # def home(request):
 #  context={"date":datetime.now}
 #  return render(request, 'app/home.html',context)
@@ -40,8 +40,6 @@ def address(request):
 def orders(request):
  return render(request, 'app/orders.html')
 
-def change_password(request):
- return render(request, 'app/changepassword.html')
 
 def mobile(request,data=None):
  if data==None:
@@ -100,6 +98,7 @@ class  CustomerRegistrationView(View):
  def post(self,request):
   form=CustomerRegistrationForm(request.POST)
   if form.is_valid():
+   messages.success(request,'congratulations you have successfully registered!!!')
    form.save()
   return render(request, 'app/customerregistration.html',{"form":form})
 
