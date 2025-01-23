@@ -121,7 +121,15 @@ STATIC_URL = 'static/'
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR/'media'
 LOGIN_REDIRECT_URL='/profile/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# email setup in django
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'cresthabeenod30@gmail.com'#sender's email-id
+EMAIL_HOST_PASSWORD ='ypzj xzuh kxgv bdys' #password associated with above email-id (not the regular password)

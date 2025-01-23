@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from datetime import datetime
 from app.models import *
 from django.views import View
 from .models import User
 from .forms import CustomerRegistrationForm
 from django.contrib import messages
+
+from django.contrib.auth import logout
 # def home(request):
 #  context={"date":datetime.now}
 #  return render(request, 'app/home.html',context)
@@ -87,8 +89,10 @@ def bottomwears(request,data=None):
  return render(request, 'app/bottomwears.html',{"bottoms":bottoms})
 
 
-def login(request):
- return render(request, 'app/login.html')
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+ 
 
 class  CustomerRegistrationView(View):
  def get(self,request):
