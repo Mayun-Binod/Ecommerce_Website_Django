@@ -2,8 +2,8 @@ from django.shortcuts import render,redirect
 from datetime import datetime
 from app.models import *
 from django.views import View
-from .models import User
-from .forms import CustomerRegistrationForm
+from .models import User,Customer
+from .forms import CustomerRegistrationForm,CustomerProfileForm
 from django.contrib import messages
 
 from django.contrib.auth import logout
@@ -19,9 +19,6 @@ class ProductView(View):
   return render(request, 'app/home.html',{'mobile':mobile,'laptop':laptop,'topwears':topwears,'bottomwears':bottomwears})
 
 
-# def product_detail(request):
-#  return render(request, 'app/productdetail.html')
-
 class ProductDetailView(View):
  def get(self,request,pk):
   product=Product.objects.get(pk=pk)
@@ -33,11 +30,9 @@ def add_to_cart(request):
 def buy_now(request):
  return render(request, 'app/buynow.html')
 
-def profile(request):
- return render(request, 'app/profile.html')
-
 def address(request):
- return render(request, 'app/address.html')
+ addr=Customer.objects.filter(user=request.user)
+ return render(request, 'app/address.html',{"addr":addr,'active':'btn-danger'})
 
 def orders(request):
  return render(request, 'app/orders.html')
@@ -108,3 +103,23 @@ class  CustomerRegistrationView(View):
 
 def checkout(request):
  return render(request, 'app/checkout.html')
+
+
+class ProfileView(View):
+ def get(self,request):
+  form=CustomerProfileForm()
+  return render(request, 'app/profile.html',{'form':form,'active':'btn-info'})
+ 
+ def post(self,request):
+  form=CustomerProfileForm(request.POST)
+  if form.is_valid():
+   usr=request.user
+   nm=form.cleaned_data['name']
+   loc=form.cleaned_data['locality']
+   city=form.cleaned_data['city']
+   state=form.cleaned_data['state']
+   zc=form.cleaned_data['zipcode']
+   store=Customer(user=usr,name=nm,locality=loc,state=state,city=city,zipcode=zc)
+   messages.info(request,"your profile has been successfully Updated!!!")
+   store.save()
+  return render(request, 'app/profile.html',{'form':form,'active':'btn-info'})
